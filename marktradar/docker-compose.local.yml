@@ -1,0 +1,4 @@
+# Überschreibt die Quelle: nutzt den Ordner ../ridi-data-sources statt GitHub.
+services:
+  datasources:
+    build: ../ridi-data-sources

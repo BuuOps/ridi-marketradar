@@ -1,0 +1,27 @@
+# Startet MarktRadar UND den Data-Sources-Container (aus dem zweiten Repo).
+#   docker compose up --build          -> http://localhost:8000
+# Lokale Entwicklung mit beiden Repos nebeneinander:
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+services:
+  datasources:
+    build: ${DATASOURCES_REPO:-https://github.com/DEINNAME/ridi-data-sources.git#main}
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8001
+      QDRANT_URL: ${QDRANT_URL:?QDRANT_URL in .env setzen}
+      QDRANT_API_KEY: ${QDRANT_API_KEY:?QDRANT_API_KEY in .env setzen}
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
+  marktradar:
+    build: .
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8000
+      DATA_SOURCES_URL: http://datasources:8001
+    ports:
+      - "8000:8000"
+    depends_on:
+      - datasources
+    restart: unless-stopped
