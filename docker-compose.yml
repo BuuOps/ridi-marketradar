@@ -4,7 +4,7 @@
 #   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
 services:
   datasources:
-    build: ${DATASOURCES_REPO:-https://github.com/DEINNAME/ridi-data-sources.git#main}
+    build: ${DATASOURCES_REPO:-https://github.com/BuuOps/ridi-data-sources.git#main}
     environment:
       HOST: 0.0.0.0
       PORT: 8001
